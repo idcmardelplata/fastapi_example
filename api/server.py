@@ -38,15 +38,25 @@ async def update_book(book_id: str, book: Book):
     return book
 
 
-@app.path("/api/v1/books/{book_id}")
+@app.patch("/api/v1/books/{book_id}")
 async def update_isbn(item_id: str, new_isbn: str):
-    pass
+
+    book = {}
+
+    for idx, item in enumerate(books_db):
+        if item["ISBN"] == item_id:
+            book = item
+            del books_db[idx]
+            book["ISBN"] = new_isbn
+            books_db.append(book)
+            return book
+
+
+    
 
 @app.delete("/api/v1/books/{book_id}")
 async def delete_book(book_id):
     pass
-
-
 
 if __name__ == "__main__":
     config = uvicorn.Config("server:app", port=8080, log_level="info", reload=True)
