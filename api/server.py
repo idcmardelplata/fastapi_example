@@ -1,18 +1,18 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import uvicorn
 from books_db import books_db
 
 from pydantic import BaseModel
 
 class Book(BaseModel):
-    name: str
-    author: str
-    year: int
-    Description: str
-    ISBN: str
+    name: str | None = None
+    author: str | None = None
+    year: int | None = None
+    Description: str | None = None
+    ISBN: str | None = None
+
 
 app = FastAPI()
-
 
 # Comienzo del router
 
@@ -37,26 +37,34 @@ async def update_book(book_id: str, book: Book):
     books_db = update_db
     return book
 
+def find_book(isbn: str):
+    for (idx, book) in enumerate(books_db):
+        if book["ISBN"] == isbn:
+            return (book, idx)
+    return ({}, -1)
+
 
 @app.patch("/api/v1/books/{book_id}")
-async def update_isbn(item_id: str, new_isbn: str):
+async def update_isbn(isbn: str, new_data: Book):
+    book, idx = find_book(isbn)
+    if idx == -1:
+        raise HTTPException(status_code=404, detail="Book not found")
 
-    book = {}
+    #TODO: Agregar logica para verificar que ciertos campos no vengan vacios.
+    new_book = Book(**new_data.dict())
 
-    for idx, item in enumerate(books_db):
-        if item["ISBN"] == item_id:
-            book = item
-            del books_db[idx]
-            book["ISBN"] = new_isbn
-            books_db.append(book)
-            return book
+    books_db[idx] = new_book.dict()
+    return new_book
 
 
+@app.delete("/api/v1/books/{book_isbn}")
+async def delete_book(book_isbn: str):
+    _, idx = find_book(book_isbn)
+    if idx == -1:
+        raise HTTPException(status_code=404, detail="Book not found")
+    del books_db[idx]
+    return {"message": "Book deleted"}
     
-
-@app.delete("/api/v1/books/{book_id}")
-async def delete_book(book_id):
-    pass
 
 if __name__ == "__main__":
     config = uvicorn.Config("server:app", port=8080, log_level="info", reload=True)
