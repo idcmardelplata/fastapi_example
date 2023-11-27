@@ -39,7 +39,7 @@ async def update_book(book_id: str, book: Book):
 
 
 @app.path("/api/v1/books/{book_id}")
-async def update_isbn(item_id: str, new_isbn: str):
+async def update_isbn(book_id: str, book: Book):
     pass
 
 @app.delete("/api/v1/books/{book_id}")
