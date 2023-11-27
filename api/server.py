@@ -1,6 +1,7 @@
+from servicios.updatebook import UpdateBook
 from fastapi import FastAPI
 import uvicorn
-from books_db import books_db
+from api.books_db import books_db
 
 from pydantic import BaseModel
 
@@ -38,9 +39,10 @@ async def update_book(book_id: str, book: Book):
     return book
 
 
-@app.path("/api/v1/books/{book_id}")
+
+@app.patch("/api/v1/books/{book_id}")
 async def update_isbn(book_id: str, book: Book):
-    pass
+    return UpdateBook(books_db).update_isbn(book_id, book)
 
 @app.delete("/api/v1/books/{book_id}")
 async def delete_book(book_id):
