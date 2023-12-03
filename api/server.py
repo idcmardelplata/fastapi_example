@@ -106,6 +106,12 @@ async def update_isbn(book_id: str, new_data: Book):
 async def delete_book(book_isbn: str):
     book_use_cases.delete_book(book_isbn)
 
+
+@app.get("/api/v2/custom_header")
+def custom_header(response: Response):
+    response.headers["Custom-Header"] = "Contenido del encabezado"
+    return {"message": "header agregado con exito"}
+
 @app.get("/api/v2/redirect")
 def redirect_to_v1():
     response = RedirectResponse(url="http://localhost:8080/api/v1/books", status_code=307)
