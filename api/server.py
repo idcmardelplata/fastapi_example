@@ -11,31 +11,62 @@ class Book(BaseModel):
     Description: str | None = None
     ISBN: str | None = None
 
+class BookUseCases:
+    def __init__(self, database: list[dict]):
+        self.db = database
+
+    def create_new_book(self, book: Book):
+        books_db.append(book.dict())
+        return book
+
+    def get_all_books(self):
+        return self.db
+    
+    def get_book_by_isbn(self, isbn: str):
+        return list(filter(lambda item: (item["ISBN"] == isbn), self.db))
+
+    def update_book(self, book_isbn: str, book: Book):
+        _ , idx = self._find_book(book_isbn)
+
+        if idx != -1:
+            raise HTTPException(status_code=404, detail="Book not found")
+
+        self.db[idx] = book.dict()
+        return self.db[idx]
+
+    def delete_book(self, book_isbn: str):
+        book , idx = self._find_book(book_isbn)
+        if idx != -1:
+            del self.db[idx]
+        return book
+
+    def _find_book(self, isbn: str):
+        for (idx, book) in enumerate(books_db):
+            if book["ISBN"] == isbn:
+                return (book, idx)
+        return ({}, -1)
+
 
 app = FastAPI()
+book_use_cases = BookUseCases(database=books_db)
 
 # Comienzo del router
 
 @app.get("/api/v1/books/{book_id}")
-async def read_books(book_id):
-    """Return book id"""
-    return list(filter(lambda item: (item["ISBN"] == book_id), books_db))
+async def get_book_by_isbn(book_isbn: str):
+    return book_use_cases.get_book_by_isbn(book_isbn)
 
 @app.get("/api/v1/books")
 async def read_books():
-    """Return all books"""
-    return books_db
+    return book_use_cases.get_all_books()
 
 @app.post("/api/v1/books")
 async def create_book(book: Book):
-    books_db.append(book.dict())
-    return book
+    return book_use_cases.create_new_book(book)
 
 @app.put("/api/v1/books/{book_id}")
 async def update_book(book_id: str, book: Book):
-    update_db = [ book if item["ISBN"] == book_id else item for item in books_db]
-    books_db = update_db
-    return book
+    return book_use_cases.update_book(book_id, book)
 
 def find_book(isbn: str):
     for (idx, book) in enumerate(books_db):
@@ -59,11 +90,12 @@ async def update_isbn(isbn: str, new_data: Book):
 
 @app.delete("/api/v1/books/{book_isbn}")
 async def delete_book(book_isbn: str):
-    _, idx = find_book(book_isbn)
-    if idx == -1:
-        raise HTTPException(status_code=404, detail="Book not found")
-    del books_db[idx]
-    return {"message": "Book deleted"}
+    book_use_cases.delete_book(book_isbn)
+    # _, idx = find_book(book_isbn)
+    # if idx == -1:
+    #     raise HTTPException(status_code=404, detail="Book not found")
+    # del books_db[idx]
+    # return {"message": "Book deleted"}
     
 
 if __name__ == "__main__":
