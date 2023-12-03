@@ -1,6 +1,6 @@
 from typing import Annotated
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import Response
+from fastapi.responses import Response, RedirectResponse
 from datetime import timedelta
 import uvicorn
 from books_db import books_db
@@ -105,6 +105,11 @@ async def update_isbn(book_id: str, new_data: Book):
 @app.delete("/api/v1/books/{book_isbn}")
 async def delete_book(book_isbn: str):
     book_use_cases.delete_book(book_isbn)
+
+@app.get("/api/v2/redirect")
+def redirect_to_v1():
+    response = RedirectResponse(url="http://localhost:8080/api/v1/books", status_code=307)
+    return response
     
 
 if __name__ == "__main__":
