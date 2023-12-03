@@ -1,6 +1,8 @@
 from typing import Annotated
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import Response, RedirectResponse
+from fastapi.responses import Response, RedirectResponse, HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from datetime import timedelta
 import uvicorn
 from books_db import books_db
@@ -53,6 +55,20 @@ class BookUseCases:
 
 app = FastAPI()
 book_use_cases = BookUseCases(database=books_db)
+
+# Templates
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/items/{ids}", response_class=HTMLResponse)
+async def read_item_template(request: Request, ids: str):
+    return templates.TemplateResponse("item.html", {"request": request, "id": ids})
+
+
+
+
+
+
 
 # Comienzo del router
 
