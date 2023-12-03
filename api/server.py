@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException
+from typing import Annotated
+from fastapi import FastAPI, HTTPException, Query
 import uvicorn
 from books_db import books_db
 
@@ -76,8 +77,8 @@ def find_book(isbn: str):
 
 
 @app.patch("/api/v1/books/{book_id}")
-async def update_isbn(isbn: str, new_data: Book):
-    book, idx = find_book(isbn)
+async def update_isbn(book_id: str, new_data: Book):
+    _, idx = find_book(book_id)
     if idx == -1:
         raise HTTPException(status_code=404, detail="Book not found")
 
@@ -91,11 +92,6 @@ async def update_isbn(isbn: str, new_data: Book):
 @app.delete("/api/v1/books/{book_isbn}")
 async def delete_book(book_isbn: str):
     book_use_cases.delete_book(book_isbn)
-    # _, idx = find_book(book_isbn)
-    # if idx == -1:
-    #     raise HTTPException(status_code=404, detail="Book not found")
-    # del books_db[idx]
-    # return {"message": "Book deleted"}
     
 
 if __name__ == "__main__":
