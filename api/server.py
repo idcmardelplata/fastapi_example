@@ -1,7 +1,10 @@
 from typing import Annotated
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import Response
+from datetime import timedelta
 import uvicorn
 from books_db import books_db
+
 
 from pydantic import BaseModel
 
@@ -52,6 +55,16 @@ app = FastAPI()
 book_use_cases = BookUseCases(database=books_db)
 
 # Comienzo del router
+
+@app.post("/api/v1/cookie")
+def create_cookie(response: Response):
+    response.set_cookie(key="mi_session", value="Hola", max_age=timedelta(days=7))
+    return {"message": "Cookie agregada"}
+
+@app.get("/api/v1/cookie")
+def read_cookie(request: Request):
+    cookie = request.cookies.get("mi_session")
+    return {"cookie": f"La cookie dice {cookie}"}
 
 @app.get("/api/v1/books/{book_id}")
 async def get_book_by_isbn(book_isbn: str):
