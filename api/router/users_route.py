@@ -1,5 +1,13 @@
-from fastapi import APIRouter
+#TODO: Tarea para josu ;)
+"""
+Algunas tareas para hacer en este router:
+    1. refactorizar el router, moviendo cada cosa a su respectivo fichero
+    2. quitar toda la duplicidad
+    3. cambiar la funcion create_user para que retorne un json como el siguiente: {"msg": "User creation sucess", "token": token }
+    4. implementar al menos un ruta que requiera el token para poder accederse (Un gran plus ya que requiere investigar)
+"""
 
+from fastapi import APIRouter
 from fastapi import status, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import RedirectResponse
@@ -71,8 +79,6 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
             "access_token": create_access_token(user["email"]),
             "refresh_token": create_refresh_token(user["email"])
             }
-
-
 
 
 
