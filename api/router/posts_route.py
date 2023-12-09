@@ -12,6 +12,7 @@ post_route = APIRouter(prefix="/posts", tags=["posts", "articles"])
 async def get_posts():
     raise NotImplemented()
 
+
 @post_route.get("/{user_id}")
 async def get_posts_by_user_id(user_id: int):
     raise NotImplemented()

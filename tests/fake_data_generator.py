@@ -51,5 +51,5 @@ def gen_fake_data(count: int):
         
 
 if __name__ == "__main__":
-    out_data = json.dumps(gen_fake_data(2))
+    out_data = json.dumps(gen_fake_data(200))
     print(out_data)

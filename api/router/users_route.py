@@ -53,9 +53,8 @@ async def create_user(data: UserAuth):
             'password': get_hashed_password(data.password),
             'user_id': str(uuid4())
             }
-    print(user)
+
     db[data.email] = user #guarda el usuario en la base de datos
-    print(db)
     return user
 
 @user_route.post("/login", summary="Create access and refresh tokens for user", response_model=TokenSchema)
