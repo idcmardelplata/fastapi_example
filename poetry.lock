@@ -389,6 +389,21 @@ files = [
 ]
 
 [[package]]
+name = "mdgen"
+version = "0.1.10"
+description = "A library to generate random markdown text"
+category = "main"
+optional = false
+python-versions = ">=3.6,<4.0"
+files = [
+    {file = "mdgen-0.1.10-py3-none-any.whl", hash = "sha256:2de4d250b07aa9c84406baa256e6319dad7857d1a02ed3932d0a7997aa666320"},
+    {file = "mdgen-0.1.10.tar.gz", hash = "sha256:5e13f414dc40593a013a9b81436d05d8c9b0c231b2e5fe6766772e88283a2271"},
+]
+
+[package.dependencies]
+Faker = "*"
+
+[[package]]
 name = "mdurl"
 version = "0.1.2"
 description = "Markdown URL utilities"
@@ -800,4 +815,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "1f85d38acc5fe8b9739b5be1f43f3c6c265256ac538c58c320dc8f856eb4014f"
+content-hash = "91fc79eea5e8cdb29c2a787048c54c5ceb4ef06533db7f3f0a13935b0c0deecc"

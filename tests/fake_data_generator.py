@@ -10,7 +10,7 @@ class Generators:
     @staticmethod
     def generate_users(count: int):
         users = []
-        metadata = {}
+        # metadata = {}
 
         for _, idx in enumerate(range(count)):
             users.append({
@@ -28,7 +28,7 @@ class Generators:
     def generate_posts(count: int):
         posts = []
         for _, idx in enumerate(range(count)):
-            posts.append({"user_id": idx, "post": fake.post(size="medium")})
+            posts.append({"user_id": random.randrange(0, count), "post_id": idx, "post": fake.post(size="medium")})
         return posts
 
     @staticmethod
