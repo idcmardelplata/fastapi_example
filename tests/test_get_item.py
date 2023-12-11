@@ -1,3 +1,4 @@
+# TODO: Eliminar este fichero de test puesto que quedo obsoleto.
 #from api.books_db import books_db
 
 
