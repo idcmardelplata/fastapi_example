@@ -35,7 +35,7 @@ class TokenSchema(BaseModel):
 db: dict = {}
 
 
-@user_route.post("/signup", summary="Create new user", response_model=NewUser)
+@user_route.post("/signup", summary="Create new user")
 async def create_user(data: UserAuth):
     serv = CreateUser(data, db)
 
@@ -44,7 +44,8 @@ async def create_user(data: UserAuth):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="User with this email already exists madafaka")
     else:
-        return serv.create()
+        serv.create()
+        return JSONResponse(content="{'message':'User created. Can get loged in now !'}]")
 
 @user_route.post("/login", summary="Create access and refresh tokens for user", response_model=TokenSchema)
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
