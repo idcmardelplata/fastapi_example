@@ -8,12 +8,12 @@ class Login:
         self._user = self._db.get(form_data.username, None)
 
     def exists_user(self):
-        if self._user is None: 
+        if self._user is None:
             return False
 
     def is_pass_right(self):
         hashed_pass = self._user["password"]
-        if not verify_password(form_data.password, hashed_pass): #Verifica la contraseña
+        if not verify_password(self._form_data.password, hashed_pass): #Verifica la contraseña
             return False
     
     def get_tokens(self) -> list:
