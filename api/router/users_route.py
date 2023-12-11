@@ -4,8 +4,8 @@ from fastapi import status, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import RedirectResponse
 from fastapi.responses import JSONResponse
-from servicios.usercrudservice import CreateUser, UpdateUser, DeleteUser
-from servicios.userauth import Login, Logout
+from servicios.usercrudservice import CreateUser
+from servicios.userauth import Login
 from uuid import uuid4
 from tokens.utils import (
         get_hashed_password,
