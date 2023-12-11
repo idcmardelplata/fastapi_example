@@ -9,8 +9,7 @@ class CreateUser:
         self._user = db.get(data.email, None)
 
     def already_exists(self):
-        if self._user is not None:
-            return True
+        return self._user is not None
 
     def create(self):
         user = {
@@ -20,9 +19,5 @@ class CreateUser:
                 }
 
         self._db[self._data.email] = user #guarda el usuario en la base de datos
-        
-
-
-        
 
 
