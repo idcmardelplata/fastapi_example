@@ -1,12 +1,6 @@
-
-from fastapi import APIRouter
-from fastapi import status, HTTPException, Depends
-from fastapi.security import OAuth2PasswordRequestForm
-from fastapi.responses import RedirectResponse
-from fastapi.responses import JSONResponse
+from api import APIRouter, status, HTTPException, Depends, OAuth2PasswordRequestForm, RedirectResponse, JSONResponse , uuid4 , BaseModel, Annotated
 from servicios.usercrudservice import CreateUser
 from servicios.userauth import Login
-from uuid import uuid4
 from tokens.utils import (
         get_hashed_password,
         create_access_token,
@@ -14,8 +8,6 @@ from tokens.utils import (
         verify_password
         )
 
-from pydantic import BaseModel
-from typing import Annotated
 
 user_route = APIRouter(prefix="/users", tags=["users"])
 

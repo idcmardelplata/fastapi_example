@@ -1,8 +1,4 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware 
-from fastapi.middleware.gzip import GZipMiddleware
-import uvicorn
-import logging
+from api import FastAPI, CORSMiddleware, GZipMiddleware, uvicorn, logging
 from router import users, posts, comments
 
 HOST="0.0.0.0"

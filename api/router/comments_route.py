@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-from pydantic import BaseModel
+from api import APIRouter, BaseModel
 
 class NewComment(BaseModel):
     post_id: int
