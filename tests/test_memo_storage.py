@@ -15,3 +15,12 @@ def test_user_memo_storage_should_has_a_save_method_which_stores_users():
     assert user["email"] == "julian@gmail.com"
     assert user["password"] == "superpass123"
 
+def test_user_memo_storage_should_has_a_exists_method():
+    storage = UserMemoStorage()
+    storage.save({
+        "email": "julian@gmail.com",
+        "password": "superpass123"
+    })
+    assert storage.exists("julian@gmail.com")
+
+

@@ -12,3 +12,7 @@ class UserMemoStorage:
     def save(self,user:UserAuth):
         if user is not None:
             self._all.append(user)
+
+
+    def exists(self,email:str) -> bool:
+        return [usuario for usuario in self._all if usuario["email"] == email] is not None
