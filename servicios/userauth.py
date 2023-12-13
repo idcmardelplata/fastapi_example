@@ -1,11 +1,12 @@
 from api.tokens.utils import verify_password,create_access_token,create_refresh_token
+from servicios.memo_storage import UserMemoStorage
 
 class Login:
 
-    def __init__(self,form_data,db):
+    def __init__(self,form_data,db=UserMemoStorage):
         self._form_data= form_data
         self._db = db
-        self._user = self._db.get(form_data.username, None)
+        self._user = self._db.get(form_data.username)
 
     def exists_user(self):
         return self._user is not None

@@ -19,5 +19,5 @@ class UserMemoStorage:
 
     def get(self,email:str):
         if self.exists(email) is not False:
-            return [usuario for usuario in self._all if usuario["email"] == email] 
+            return [usuario for usuario in self._all if usuario["email"] == email][0] 
  
