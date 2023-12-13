@@ -1,4 +1,4 @@
-from api.tokens.utils import get_hashed_password
+from servicios.password_managment import get_hashed_password
 from servicios.memo_storage import UserMemoStorage
 from uuid import uuid4
 

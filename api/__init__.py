@@ -12,3 +12,4 @@ from pydantic import BaseModel
 from typing import Annotated
 import uvicorn
 import logging
+import bcrypt

@@ -1,4 +1,5 @@
-from api.tokens.utils import verify_password,create_access_token,create_refresh_token
+from api.tokens.tokens_managment import create_access_token,create_refresh_token
+from servicios.password_managment import verify_password
 from servicios.memo_storage import UserMemoStorage
 
 class Login:

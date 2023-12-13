@@ -2,12 +2,11 @@ from api import APIRouter, status, HTTPException, Depends, OAuth2PasswordRequest
 from servicios.memo_storage import UserMemoStorage
 from servicios.usercrudservice import CreateUser
 from servicios.userauth import Login
-from api.tokens.utils import (
-        get_hashed_password,
+from api.tokens.tokens_managment import (
         create_access_token,
         create_refresh_token,
-        verify_password
         )
+from servicios.password_managment import get_hashed_password,verify_password
 
 
 user_route = APIRouter(prefix="/users", tags=["users"])
