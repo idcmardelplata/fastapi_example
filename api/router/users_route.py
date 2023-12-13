@@ -37,7 +37,7 @@ async def create_user(data: UserAuth):
             detail="User with this email already exists madafaka")
     else:
         serv.create()
-        return JSONResponse(content="{'message':'User created. Can get loged in now !'}")
+        return JSONResponse(content={'message':'User created. Can get loged in now !'})
 
 @user_route.post("/login", summary="Create access and refresh tokens for user", response_model=TokenSchema)
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
