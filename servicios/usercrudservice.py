@@ -1,15 +1,15 @@
 from api.tokens.utils import get_hashed_password
+from servicios.memo_storage import UserMemoStorage
 from uuid import uuid4
 
 class CreateUser:
 
-    def __init__(self,data,db):
+    def __init__(self,data,db=UserMemoStorage()):
         self._data = data
         self._db = db
-        self._user = db.get(data.email, None)
 
     def already_exists(self):
-        return self._user is not None
+        return self._db.exists(self._data.email)
 
     def create(self):
         user = {
@@ -18,6 +18,6 @@ class CreateUser:
                 'user_id': str(uuid4())
                 }
 
-        self._db[self._data.email] = user #guarda el usuario en la base de datos
+        self._db.save(user)
 
 

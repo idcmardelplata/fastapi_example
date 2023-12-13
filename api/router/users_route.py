@@ -1,4 +1,5 @@
 from api import APIRouter, status, HTTPException, Depends, OAuth2PasswordRequestForm, RedirectResponse, JSONResponse , uuid4 , BaseModel, Annotated
+from servicios.memo_storage import UserMemoStorage
 from servicios.usercrudservice import CreateUser
 from servicios.userauth import Login
 from api.tokens.utils import (
@@ -24,7 +25,7 @@ class TokenSchema(BaseModel):
     access_token: str
     refresh_token: str
 
-db: dict = {}
+db = UserMemoStorage()
 
 
 @user_route.post("/signup", summary="Create new user")
