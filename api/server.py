@@ -1,5 +1,5 @@
 from api import FastAPI, CORSMiddleware, GZipMiddleware, uvicorn, logging
-from router import users, posts, comments
+from api.router import users, posts, comments
 
 HOST="0.0.0.0"
 PORT=8080
