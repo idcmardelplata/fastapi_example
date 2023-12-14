@@ -1,6 +1,12 @@
 from api.tokens.tokens_managment import create_access_token,create_refresh_token
-from servicios.password_managment import verify_password
+from servicios.users.account.passman import verify_password
 from servicios.memo_storage import UserMemoStorage
+from servicios.users.account.auth import AuthService
+
+class SessionService:
+    def __init__(self,auth=AuthService()):
+        self.auth=auth
+
 
 class Login:
 
@@ -21,4 +27,5 @@ class Login:
             "access_token": create_access_token(self._user["email"]), 
             "refresh_token": create_refresh_token(self._user["email"])
         }
+
 

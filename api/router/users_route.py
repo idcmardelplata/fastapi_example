@@ -1,12 +1,13 @@
 from api import APIRouter, status, HTTPException, Depends, OAuth2PasswordRequestForm, RedirectResponse, JSONResponse , uuid4 , BaseModel, Annotated
 from servicios.memo_storage import UserMemoStorage
-from servicios.usercrudservice import CreateUser
-from servicios.userauth import Login
+from servicios.users.account.crud import CreateUser
+from servicios.users.account.session import Login
 from api.tokens.tokens_managment import (
         create_access_token,
         create_refresh_token,
         )
-from servicios.password_managment import get_hashed_password,verify_password
+from servicios.users.account.passman import get_hashed_password,verify_password
+
 
 
 user_route = APIRouter(prefix="/users", tags=["users"])

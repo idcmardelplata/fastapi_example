@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from servicios.usercrudservice import CreateUser
+from servicios.users.account.crud import CreateUser
 from servicios.memo_storage import UserMemoStorage
 from entidades.users import UserAuth
 

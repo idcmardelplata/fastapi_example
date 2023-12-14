@@ -1,5 +1,5 @@
-from servicios.password_managment import get_hashed_password
 from servicios.memo_storage import UserMemoStorage
+from servicios.users.account.passman import get_hashed_password
 from uuid import uuid4
 
 class CreateUser:
@@ -20,4 +20,8 @@ class CreateUser:
 
         self._db.save(user)
 
+
+class Crud:
+    def __init__(self,create=CreateUser(None)):
+        self.create = create
 
