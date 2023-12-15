@@ -53,7 +53,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
                 detail="Incorrect email or password"
                 )
 
-    tokens = serv.get_tokens()
+    tokens = serv.generate_tokens()
     return JSONResponse(content="{'message':'User loged. Can get into in!'}]", headers=tokens)
 
 @user_route.get("/profile/{user_id}",summary="See user profile")

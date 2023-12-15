@@ -22,10 +22,11 @@ class Login:
         hashed_pass = self._user["password"]
         return verify_password(self._form_data.password, hashed_pass) #Verifica la contraseña
     
-    def get_tokens(self) -> list:
-        return {
+    def generate_tokens(self) -> list:
+        tokens = {
             "access_token": create_auth_token(self._user["email"],type="access"), 
             "refresh_token": create_auth_token(self._user["email"],type="refresh")
         }
+        return tokens
 
 

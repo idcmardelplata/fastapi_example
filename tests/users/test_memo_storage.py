@@ -23,4 +23,17 @@ def test_user_memo_storage_should_has_a_exists_method():
     })
     assert storage.exists("julian@gmail.com")
 
+def test_user_memo_should_update_user():
+    storage = UserMemoStorage()
+    access_token = "123supercalifragilisticoespialidoso"
+    storage.save({
+        "email": "julian@gmail.com",
+        "password": "superpass123"
+    })
+    storage.update("julian@gmail.com",updated={
+        "email": "julian@gmail.com",
+        "password": "superpass123",
+        "access_token":access_token
+    })
+    assert storage.get("julian@gmail.com")["access_token"]==access_token
 
