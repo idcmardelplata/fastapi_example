@@ -1,4 +1,4 @@
-from api.tokens.tokens_managment import create_access_token,create_refresh_token
+from api.tokens.tokens_managment import create_auth_token
 from servicios.users.account.passman import verify_password
 from servicios.memo_storage import UserMemoStorage
 from servicios.users.account.auth import AuthService
@@ -24,8 +24,8 @@ class Login:
     
     def get_tokens(self) -> list:
         return {
-            "access_token": create_access_token(self._user["email"]), 
-            "refresh_token": create_refresh_token(self._user["email"])
+            "access_token": create_auth_token(self._user["email"],type="access"), 
+            "refresh_token": create_auth_token(self._user["email"],type="refresh")
         }
 
 

@@ -2,10 +2,7 @@ from api import APIRouter, status, HTTPException, Depends, OAuth2PasswordRequest
 from servicios.memo_storage import UserMemoStorage
 from servicios.users.account.crud import CreateUser
 from servicios.users.account.session import Login
-from api.tokens.tokens_managment import (
-        create_access_token,
-        create_refresh_token,
-        )
+from api.tokens.tokens_managment import create_auth_token
 from servicios.users.account.passman import get_hashed_password,verify_password
 
 
