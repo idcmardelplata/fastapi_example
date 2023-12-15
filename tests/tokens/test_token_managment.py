@@ -1,4 +1,4 @@
-from api.tokens.tokens_managment import create_auth_token
+from api.tokens.tokens_managment import create_auth_token,decrypt_auth_token
 import jwt
 """administracion de tokens del sistema"""
 
@@ -19,3 +19,10 @@ def test_managment_should_create_refresh_token():
     assert decoded_data["sub"] == "cifrated payload"
     assert decoded_data["exp"] is not None
     
+def test_managment_should_allow_decript():
+    token =  create_auth_token("cifrated payload",key="hola123",expires_delta=10,type="refresh")
+    decoded_data = decrypt_auth_token(token)
+    assert decoded_data["sub"]== "cifrated payload"
+    assert decoded_data["exp"] is not None
+
+

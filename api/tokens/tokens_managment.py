@@ -29,4 +29,9 @@ def create_auth_token(subject: Union[str, Any], expires_delta: int = None,key="h
     return encoded_jwt
     
 
+def decrypt_auth_token(token:str,key="hola123") -> str:
+    return jwt.decode(jwt=token,
+                              key=key,
+                              algorithms=["HS256"])
+
 
