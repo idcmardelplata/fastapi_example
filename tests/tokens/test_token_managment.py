@@ -10,4 +10,12 @@ def test_managment_should_create_access_token():
     assert decoded_data["sub"] == "cifrated payload"
     assert decoded_data["exp"] is not None
     
+ 
+def test_managment_should_create_refresh_token():
+    token =  create_refresh_token("cifrated payload",key="key",expires_delta=10)
+    decoded_data = jwt.decode(jwt=token,
+                              key='key',
+                              algorithms=["HS256"])
+    assert decoded_data["sub"] == "cifrated payload"
+    assert decoded_data["exp"] is not None
     
