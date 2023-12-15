@@ -2,6 +2,7 @@ from api import APIRouter, status, HTTPException, Depends, OAuth2PasswordRequest
 from servicios.memo_storage import UserMemoStorage
 from servicios.users.account.crud import CreateUser
 from servicios.users.account.session import Login
+from fastapi import Header
 
 
 
@@ -55,8 +56,9 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     tokens = serv.get_tokens()
     return JSONResponse(content="{'message':'User loged. Can get into in!'}]", headers=tokens)
 
-
-
+@user_route.get("/profile/{user_id}",summary="See user profile")
+async def profile(access_token: Annotated[str | None, Header()] = None,refresh_token: Annotated[str | None, Header()] = None):
+    return {"access: "+access_token,"refresh: "+refresh_token}
 
 @user_route.get("/")
 async def get_users():
