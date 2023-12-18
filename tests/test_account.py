@@ -6,15 +6,12 @@ from generators import gen_random_user, gen_registered_user
 #TODO: The user not should exists
 
 def test_should_register_new_user():
-
     user = gen_random_user()
     account = Account()
+
     assert account.register(user) == True
 
-    sut = account.get_user_by_email(user.email)
-
-    assert sut["email"] == user.email
-    assert sut["password"] != user.password
+    assert account.login(user) != {"msg": "incorrect email or password"}
     
 def test_login():
     account, user = gen_registered_user()
@@ -22,3 +19,9 @@ def test_login():
 
     assert type(response) == dict
     assert response != {"msg": "incorrect email or password"}
+
+def test_logout():
+    account, user = gen_registered_user()
+    response = account.logout(user)
+    assert response == {"msg": "user logout"}
+

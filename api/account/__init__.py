@@ -1,14 +1,15 @@
-import os
 import bcrypt
-from api.repository.user_repository import UserRepository
-from api.account.auth import create_tokens
+from api.repository import UserRepository, RefreshTokenRepository
+from api.account.auth import create_tokens, read_token
 from api.schemas import User
 from dotenv import load_dotenv
 
 class Account:
 
     def __init__(self) -> None:
-        self.repo = UserRepository()
+        self.user_repository = UserRepository()
+        self.refresh_token_repository = RefreshTokenRepository()
+
         load_dotenv()
 
     def register(self, user: User) -> bool:
@@ -16,19 +17,24 @@ class Account:
 
         user = User(**{"email": user.email, "password": hashed_password})
 
-        self.repo.add(user)
+        self.user_repository.add(user)
+        #NOTE: Optional could return an auth token 
         return True
 
-    def get_user_by_email(self, email: str):
-        return self.repo.get_user_by_email(email)
-
     def login(self, user: User):
-        #TODO: Debo almacenar el refresh token en una db
-        stored_user = self.repo.get_user_by_email(user.email)
+        stored_user = self.user_repository.get_user_by_email(user.email)
         if stored_user is None:
             return {"msg": "incorrect email or password"}
         else:
             if bcrypt.checkpw(user.password.encode('utf-8'), hashed_password=stored_user["password"].encode('utf-8')):
                 tokens = create_tokens(stored_user["id"])
+                self.refresh_token_repository.add_refresh_token(user.email, tokens["refresh_token"])
                 return {"msg": {"Loggin sucess": tokens}}
+
+    def logout(self, user: User):
+        self.refresh_token_repository.delete_token(user.email)
+        return {"msg": "user logout"}
+
+    def read_refresh_token(self, refresh_token: str):
+        return read_token(refresh_token, token_type="refresh")
 

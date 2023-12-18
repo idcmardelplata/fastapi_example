@@ -1,4 +1,4 @@
-from api.repository.user_repository import UserRepository, User
+from api.repository import UserRepository, User
 
 def test_should_store_user_into_storage():
     repo = UserRepository()

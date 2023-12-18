@@ -23,6 +23,7 @@ mdgen = "^0.1.10"
 
 [tool.poetry.group.dev.dependencies]
 httpx = ">=0.23.0,<0.24.0"
+pytest-cov = "^4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
