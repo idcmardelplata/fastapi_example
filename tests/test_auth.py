@@ -1,6 +1,6 @@
 import os
 import pytest
-from api.tokens import create_token, read_token, create_tokens, InvalidTokenError
+from api.account.auth import create_token, read_token, create_tokens, InvalidTokenError
 
 def test_given_user_id_should_return_a_auth_token():
     user_id = "356adf35d5bca05c96a878912025952a1c184c3c91be000ac345addbefb1660b"
