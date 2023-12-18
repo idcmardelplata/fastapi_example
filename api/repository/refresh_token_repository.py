@@ -25,4 +25,9 @@ class RefreshTokenRepository:
         if len(records) > 0:
             del self._db[records.pop()]
 
+    def refresh_token_exists(self, token: str) -> bool:
+        token = list(filter(lambda item: item["refresh_token"] == token, self._db )).pop()
+        if type(token) is dict:
+            return True
+        return False
 

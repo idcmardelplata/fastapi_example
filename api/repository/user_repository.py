@@ -18,3 +18,9 @@ class UserRepository:
             return user.pop()
         return None
 
+    def get_user_by_id(self, id: int):
+        users =  list(filter(lambda user: user["id"] == id, self._db))
+        if not len(users) == 0:
+            return users.pop()["id"]
+
+

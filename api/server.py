@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from configure_server import configure_server
+from api.configure_server import configure_server
 import uvicorn
 import logging
 from router import user_route

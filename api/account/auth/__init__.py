@@ -33,6 +33,9 @@ def create_tokens(user_id: str) -> dict[str, str]:
     refresh_token = create_token(user_id, expiration_time=REFRESH_TOKEN_EXPIRATION_TIME_DAYS, token_type="refresh")
     return {"auth_token": auth_token, "refresh_token": refresh_token}
 
+def create_auth_token(user_id: str) -> str:
+    return create_token(user_id, token_type="auth")
+
 
 
 
