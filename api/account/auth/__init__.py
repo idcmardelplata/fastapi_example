@@ -14,9 +14,9 @@ def create_token(user_id: str, expiration_time=0, key=None, token_type="auth") -
     current_date = datetime.now(tz=timezone.utc)
 
     if expiration_time == 0:
-        expiration_time = current_date + timedelta(seconds=30)
+        expiration_time = current_date + timedelta(minutes=2)
     else:
-        expiration_time = current_date + timedelta(seconds=expiration_time)
+        expiration_time = current_date + timedelta(minutes=expiration_time)
 
     token_key = _read_token_key_from_env()[token_type] if key==None else key
 
@@ -34,8 +34,4 @@ def create_tokens(user_id: str) -> dict[str, str]:
     return {"auth_token": auth_token, "refresh_token": refresh_token}
 
 def create_auth_token(user_id: str) -> str:
-    return create_token(user_id, token_type="auth")
-
-
-
-
+    return create_token(user_id, expiration_time=2, token_type="auth")

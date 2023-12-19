@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from api.configure_server import configure_server
 import uvicorn
 import logging
-from router import user_route
+from router import user_route, posts_route, comments_route
 
 HOST="0.0.0.0"
 PORT=8080
@@ -12,6 +12,8 @@ app = FastAPI()
 configure_server(app)
 
 app.include_router(user_route)
+app.include_router(posts_route)
+app.include_router(comments_route)
 
 if __name__ == "__main__":
     logging.basicConfig(format='%(process)d-%(levelname)s-%(message)s', level=logging.WARNING, filename="logs/log", filemode="w+")

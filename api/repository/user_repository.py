@@ -7,7 +7,7 @@ class UserRepository:
 
     def add(self, user: User):
         self._db.append({
-            "id": uuid4().int,
+            "user_id": uuid4().__str__(),
             "email": user.email,
             "password": user.password
             })
@@ -18,9 +18,23 @@ class UserRepository:
             return user.pop()
         return None
 
-    def get_user_by_id(self, id: int):
-        users =  list(filter(lambda user: user["id"] == id, self._db))
-        if not len(users) == 0:
-            return users.pop()["id"]
+    def get_user_by_id(self, user_id: str):
+        # users =  list(filter(lambda user: user["user_id"] == user_id, self._db))
+        # if not len(users) == 0:
+        #     return users.pop()["user_id"]
+        for user in self._db:
+            if user["user_id"] == user_id:
+                return user
+            else:
+                return None
+
+
+
+    def get_all_users_by_id(self):
+        ids = []
+        for user in self._db:
+            ids.append(user["user_id"])
+        return ids
+
 
 

@@ -51,5 +51,6 @@ def gen_fake_data(count: int):
         
 
 if __name__ == "__main__":
-    out_data = json.dumps(gen_fake_data(200))
+    # out_data = json.dumps(gen_fake_data(200))
+    out_data = Generators.generate_posts(count=100)
     print(out_data)
