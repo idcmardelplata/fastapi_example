@@ -12,4 +12,3 @@ def gen_registered_user():
     user = gen_random_user()
     account.register(user)
     return account, user
-

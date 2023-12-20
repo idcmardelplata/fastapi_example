@@ -4,6 +4,20 @@ from api.account.auth import create_tokens, read_token, create_auth_token
 from api.schemas import User
 from dotenv import load_dotenv
 
+class LogginResult:
+    def __init__(self, tokens):
+        self.refresh = tokens.get("refresh_token")
+        self.auth = tokens.get("auth_token") 
+
+    def get_refresh_token(self):
+        return self.refresh
+
+    def get_auth_token(self):
+        return self.auth
+
+    def get_tokens_in_dict(self):
+        return {"auth_token": self.auth, "refresh_token": self.refresh}
+
 class Account:
 
     def __init__(self) -> None:
@@ -31,8 +45,7 @@ class Account:
             if bcrypt.checkpw(user.password.encode('utf-8'), hashed_password=stored_user["password"].encode('utf-8')):
                 tokens = create_tokens(stored_user["user_id"])
                 self.refresh_token_repository.add_refresh_token(user.email, tokens["refresh_token"])
-                #FIX: cambiar esto para que retorne solamente los tokens en un diccionario
-                return {"msg": {"Loggin sucess": tokens}}
+                return LogginResult(tokens=tokens)
 
     def exists_refresh_token(self, token: str) -> bool:
         return self.refresh_token_repository.refresh_token_exists(token)
@@ -43,6 +56,15 @@ class Account:
 
     def read_refresh_token(self, refresh_token: str):
         return read_token(refresh_token, token_type="refresh")
+
+    def validate_token(self, token):
+        user_id = self.read_refresh_token(token)["user_id"]
+        if self.exists_refresh_token(token):
+            new_auth_token = self.create_auth_token(user_id)
+            return {"Authorization: Bearer ": new_auth_token}
+        else:
+            return {"error": "Invalid token"}
+
 
     def read_auth_token(self, auth_token: str):
         return read_token(auth_token, token_type="auth")

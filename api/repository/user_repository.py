@@ -6,11 +6,14 @@ class UserRepository:
         self._db = []
 
     def add(self, user: User):
+        _uuid = uuid4().__str__()
+
         self._db.append({
-            "user_id": uuid4().__str__(),
+            "user_id": _uuid,
             "email": user.email,
             "password": user.password
             })
+        return _uuid
 
     def get_user_by_email(self, email: str) -> dict[str, str] | None:
         user =  list(filter(lambda user: user["email"] == email, self._db))
@@ -18,13 +21,12 @@ class UserRepository:
             return user.pop()
         return None
 
-    def get_user_by_id(self, user_id: str):
-        # users =  list(filter(lambda user: user["user_id"] == user_id, self._db))
-        # if not len(users) == 0:
-        #     return users.pop()["user_id"]
+    def get_user_by_id(self, user_id: str) -> User | None:
+        if len(self._db) == 0: return None
+
         for user in self._db:
             if user["user_id"] == user_id:
-                return user
+                return User(**user)
             else:
                 return None
 

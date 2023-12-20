@@ -1,4 +1,4 @@
-from api.account import Account
+from api.account import Account, LogginResult
 from api.schemas import User
 from generators import gen_random_user, gen_registered_user
 
@@ -17,7 +17,7 @@ def test_login():
     account, user = gen_registered_user()
     response = account.login(user)
 
-    assert type(response) == dict
+    assert type(response) is LogginResult
     assert response != {"msg": "incorrect email or password"}
 
 def test_logout():
